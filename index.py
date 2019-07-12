@@ -30,17 +30,14 @@ def register():
             return "not inserted data"
 
 
-@app.route('/login',methods=["GET,POST"])
+@app.route('/retrieve')
 def login():
-    if request.method=="POST":
-        username=request.form['username']
-        password=request.form['password']
-        con = sqlite3.connect("database.db")
-        con.row_factory = sql.Row
-        cur = con.cursor()
-        cur.execute("select * from user where username=?",username);
+    con = sqlite3.connect("database.db")
+    con.row_factory = sqlite3.Row
+    cur = con.cursor()
+    cur.execute("select * from school");
 
-        rows = cur.fetchall();
-        return render_template("list.html", rows=rows)
+    rows = cur.fetchall();
+    return render_template("list.html", rows=rows)
 if __name__=="__main__":
     app.run(debug=True)
