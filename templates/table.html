@@ -20,8 +20,12 @@
                 {% for j in range(6) %}
                     <td style="color:green">
                         {% if [i,j] in result %}
-                        <a href="www.google.com">Book Now</a>
-
+                        <form action="http://localhost:5000/book_now" method="POST">
+                            <input type="hidden" name="req_resource" value={{req_resource}}>
+                            <input type="hidden" name="date" value={{date+i}}>
+                            <input type="hidden" name="slot" value={{slots[j]}}>
+                            <button type="submit">Book Now</button>
+                        </form>
                         {% else %}
                         Booked
                         {% endif %}
