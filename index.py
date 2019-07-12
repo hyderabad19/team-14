@@ -1,7 +1,10 @@
 from flask import Flask,render_template,request,session
-import sqlite3
+from flask_cors import CORS
+import sqlite3, json
 import traceback
 app=Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
+
 @app.route('/reg')
 def reg():
     return render_template('schoolregister.html')
@@ -79,31 +82,57 @@ def generate_table():
         slots.append(str(i)+"-"+str(i+inc))
         #print(i,end,inc)
 
+    try:
+        date = 1
+        for i in range(0,5):
+            for j in range(0,6):
+                result2[i][j] = 'red'
+                for row in rows:
+                    #print ("i="+str(i)+"j="+str(j)+row['slot']+":"+slots[j]+":"+str(i+date)+" "+str(row['date'])+" "+row['used_by'],end=' ')
+                    if row['slot'] == slots[j] and row['date']==i+date and row['used_by']=='None':
+                        #result2[i][j] = 'green'
+                       #print('green'+result2[i][j])
+                        arr.append([i,j])
+                        break
+                #print ()
+        # for i in range(0,5):
+        #     for j in range(0,6):
+        #         print(result2[i][j])
+        # print(len(arr))
+        for l1 in range(0,2,1):
+        #    print(l1)
+            result2[arr[l1][0]][arr[l1][1]]='green'
+        # print(l1)
+    except:
+        print("l1:"+str(l1))
+    # print(result2)
+    # print(arr)
+    return render_template('table.html',slots=slots,result=arr,date=date,req_resource=required_resource)
 
-    date = 1
-    for i in range(0,5):
-        for j in range(0,6):
-            result2[i][j] = 'red'
-            for row in rows:
-                print ("i="+str(i)+"j="+str(j)+row['slot']+":"+slots[j]+":"+str(i+date)+" "+str(row['date'])+" "+row['used_by'],end=' ')
-                if row['slot'] == slots[j] and row['date']==i+date and row['used_by']=='None':
-                    #result2[i][j] = 'green'
-                    print('green'+result2[i][j])
-                    arr.append([i,j])
-                    break
-            print ()
-    for i in range(0,5):
-        for j in range(0,6):
-            print(result2[i][j])
-    print(len(arr))
-    for l1 in range(0,2,1):
-        print(l1)
-        result2[arr[l1][0]][arr[l1][1]]='green'
-    print(l1)
-    print(result2)
-    print(arr)
-    return render_template('table.html',slots=slots,result=arr,date=date)
+@app.route('/book_now',methods=["GET","POST"])
+def book_now():
+    if request.method=='POST':
+        formDetails = request.form
+        conn = sqlite3.connect('database.db')
+        booking_resource = formDetails['req_resource']
+        booking_slot = formDetails['slot']
+        booking_date = formDetails['date']
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM availability WHERE resource='"+booking_resource+"' AND slot='"+booking_slot+"' AND date='"+booking_date+"'");
 
+        rows = cur.fetchall()
+        print ("NUM of rows:"+str(len(rows)))
+        schoolname='ll'
+        for row in rows:
+            schoolname = row[0]
+            break
+        print(schoolname)
+        cur = conn.cursor()
+        cur.execute("UPDATE availability SET used_by='"+"s"+"' WHERE school='"+schoolname+"' AND slot='"+booking_slot+"' AND date='"+booking_date+"' AND resource='"+booking_resource+"'")
+        conn.commit()
+        conn.close()
+        #MAIL THE SLOT DETAILS
+        return redirect(url_for(generate_table));
 
 
 if __name__=="__main__":
