@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Availability Table</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th> Date </th>
+            {% for slot in slots %}
+                <th>{{slot}}</th>
+            {% endfor %}
+        </tr>
+        {% for i in range(5) %}
+            <tr>
+                <td>
+                    {{ date+i }}
+                </td>
+                {% for j in range(6) %}
+                    <td style="color:green">
+                        {% if [i,j] in result %}
+                        <a href="www.google.com">Book Now</a>
+
+                        {% else %}
+                        Booked
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
