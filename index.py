@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,session
 import sqlite3
 import traceback
 app=Flask(__name__)
@@ -18,11 +18,8 @@ def register():
         try:
             with sqlite3.connect('database.db') as conn:
                 cur = conn.cursor()
-                print("enter")
-                cur.execute("INSERT INTO school (name,address,phone,email,username,password) VALUES (?,?,?,?,?,?)",(name,address,phoneno,email,username,password));
-                print("yy")
+                cur.execute("INSERT INTO school (name,address,phone,email,username,password) VALUES (?,?,?,?,?,?)",(name,address,phoneno,email,username,password))
                 conn.commit();
-                print("ee")
                 return "inserted successfully"
                 conn.close();
         except Exception as e:
@@ -31,7 +28,7 @@ def register():
 
 
 @app.route('/retrieve')
-def login():
+def retrieve_details():
     con = sqlite3.connect("database.db")
     con.row_factory = sqlite3.Row
     cur = con.cursor()
@@ -39,5 +36,27 @@ def login():
 
     rows = cur.fetchall();
     return render_template("list.html", rows=rows)
+
+@app.route('/login')
+def login():
+    if(request.method=="GET"):
+        username=request.form['username']
+        password =request.form['password']
+        con = sqlite3.connect("database.db")
+        con.row_factory = sqlite3.Row
+        cur = con.cursor()
+        cur.execute("select * from school where username = ?",(username,));
+        rows=cur.fetchall();
+        for row in rows:
+            if(row['password']==password):
+                session['username']=username
+                return "logged in"
+        return "hello"
+@app.route('/logout')
+def logout():
+    session.pop('username',None)
+    return "logged out successfully"
+
+
 if __name__=="__main__":
     app.run(debug=True)
