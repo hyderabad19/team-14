@@ -1,0 +1,45 @@
+<html>
+	<head>
+		<script type="text/javascript" src="{{url_for('static',filename='Chart.min.js')}}"></script>
+	</head>
+
+	<body>
+		<h1>Analytics1 of various resources</h1>	
+		<canvas id="myChart" width="400" height="600"></canvas>
+		
+		<script type="text/javascript">
+		var ctx = document.getElementById('myChart');
+		console.log({{labels | safe}})
+		var myChart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: {{labels | safe}},
+				datasets: [{
+					label: 'Percentage of Resource Utilization',
+					data: {{data}},
+					backgroundColor: [
+						'rgba(255, 99, 132, 0.2)',
+						'rgba(54, 162, 235, 0.2)',
+						'rgba(255, 206, 86, 0.2)',
+					],
+					borderColor: [
+						'rgba(255, 99, 132, 1)',
+						'rgba(54, 162, 235, 1)',
+						'rgba(255, 206, 86, 1)',
+					],
+					borderWidth: 1
+				}]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+						}
+					}]
+				}
+			}
+		});
+		</script>
+	</body>
+</html>
