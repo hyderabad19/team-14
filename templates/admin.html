@@ -2,12 +2,17 @@
 <html lang="en">
 <head>
   <!-- Theme Made By www.w3schools.com - No Copyright -->
-  <title>Login</title>
+  <title>Admin</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <style>
@@ -153,7 +158,7 @@
   }
   </style>
 </head>
-<body id="login" data-spy="scroll" data-target=".navbar" data-offset="50">
+<body id="admin" data-spy="scroll" data-target=".navbar" data-offset="50">
 
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
@@ -167,39 +172,66 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="http://localhost:5000/">HOME</a></li>
-        <li><a href="#band">ABOUT</a></li>
-        <li><a href="#tour">OUR WORK</a></li>
-        <li><a href="#contact">CONTACT</a></li>
-    <li><a href="http://localhost:5000/registration">SCHOOL REGISTRATION</a></li>
-    <li><a href="http://localhost:5000/login">LOGIN</a></li>
+        <li><a href="home.html">HOME</a></li>
+        <li><a href="#cluster">CLUSTERS</a></li>
+		 <li><a href="#dashboard">DASHBOARD</a></li>
+		<li><a href="sendmail.py">SEND CONFIRMATION</a></li>
+		<li><a href="login.html">LOGOUT</a></li>
       </ul>
     </div>
   </div>
 </nav>
-
 <br><br><br>
-<form action ="http://localhost:5000/user_home" method="POST">
-<div id="login" class="container">
-  <h1>Login</h1>
-  <br>
-  <div class="row">
-    <div class="col-md-8">
-        <div class="col-sm-6 form-group">
-          <input class="form-control" id="username" name="Username" placeholder="UserName" type="text" required>
-        </div>
-    <br><br>
-    <div class="col-sm-6 form-group">
-          <input class="form-control" id="password" name="Password" placeholder="Password" type="password" required>
-        </div>
-    <br><br>
-        <div class="col-md-12 form-group">
-          <a><button class="btn pull-center" type="submit">Login</button></a>
-        </div>
-    </div>
-  </div>
-  </div>
-</form>
+<center>
+<br><br>
+<div id="dashboard">
+<h1>REPORTS</h1>
+<img src="/static/jpmc.png">
+</div>
+<div id="cluster" class="container">
+      <h1>Cluster-1</h1>       
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>School Id</th>
+        <th>School Name</th>
+        <th>Address</th>
+        <th>Email-Id</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>MA Ideal High School</td>
+        <td>Bahadurpura,Hyderabad</td>
+        <td>idealc1@gmail.com</td>
+      </tr>
+       <tr>
+        <td>2</td>
+        <td>Blossom High School</td>
+        <td>Bahadurpura,Hyderabad</td>
+        <td>blossomc1@gmail.com</td>
+      </tr>
+       <tr>
+        <td>3</td>
+        <td>Al-Siddique High School</td>
+        <td>Bahadurpura,Hyderabad</td>
+        <td>siddquec1@gmail.com</td>
+      </tr>
+       <tr>
+        <td>4</td>
+        <td>Abraham High School</td>
+        <td>Bahadurpura,Hyderabad</td>
+        <td>abrahamc1@gmail.com</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 </body>
 </html>
+</center>
 
+</div>
+</div>
+</body>
+</html>

@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Theme Made By www.w3schools.com - No Copyright -->
-  <title>Login</title>
-  <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <title>Availability</title>
+	 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <style>
@@ -152,6 +157,7 @@
     resize: none;
   }
   </style>
+ 
 </head>
 <body id="login" data-spy="scroll" data-target=".navbar" data-offset="50">
 
@@ -171,35 +177,44 @@
         <li><a href="#band">ABOUT</a></li>
         <li><a href="#tour">OUR WORK</a></li>
         <li><a href="#contact">CONTACT</a></li>
-    <li><a href="http://localhost:5000/registration">SCHOOL REGISTRATION</a></li>
-    <li><a href="http://localhost:5000/login">LOGIN</a></li>
+		<!-- <li><a href="register.html">SCHOOL REGISTRATION</a></li> -->
+		<li><a href="http://localhost:5000/login">LOGOUT</a></li>
       </ul>
     </div>
   </div>
 </nav>
-
-<br><br><br>
-<form action ="http://localhost:5000/user_home" method="POST">
-<div id="login" class="container">
-  <h1>Login</h1>
-  <br>
-  <div class="row">
-    <div class="col-md-8">
-        <div class="col-sm-6 form-group">
-          <input class="form-control" id="username" name="Username" placeholder="UserName" type="text" required>
-        </div>
-    <br><br>
-    <div class="col-sm-6 form-group">
-          <input class="form-control" id="password" name="Password" placeholder="Password" type="password" required>
-        </div>
-    <br><br>
-        <div class="col-md-12 form-group">
-          <a><button class="btn pull-center" type="submit">Login</button></a>
-        </div>
-    </div>
-  </div>
-  </div>
-</form>
+<div class="container"><center>
+<h2>RESOURCE ALLOTMENT</h2>
+    <table class="table table-striped" >
+        <tr>
+            <th> Date </th>
+            {% for slot in slots %}
+                <th>{{slot}}</th>
+            {% endfor %}
+        </tr>
+        {% for i in range(5) %}
+            <tr>
+                <td>
+                    {{ date+i }}
+                </td>
+                {% for j in range(6) %}
+                    <td style="color:green">
+                        {% if [i,j] in result %}
+                        <form action="http://localhost:5000/book_now" method="POST">
+                            <input type="hidden" name="req_resource" value={{req_resource}}>
+                            <input type="hidden" name="date" value={{date+i}}>
+                            <input type="hidden" name="slot" value={{slots[j]}}>
+                            <button type="submit">Book Now</button>
+                        </form>
+                        {% else %}
+                        Booked
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+	</center>
+	</div>
 </body>
 </html>
-
